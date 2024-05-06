@@ -29,7 +29,7 @@
                             <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Clientes&accion=Listar" target="myframe">Clientes</a>
                         </li>
                         <li class="nav-item">
-                            <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Ventas" target="myframe">Ventas</a>
+                            <a style="margin-left: 10px; border: none" class="btn btn-outline-light" href="Controlador?menu=Ventas&accion=default" target="myframe">Ventas</a>
                         </li>
                     </ul>
                     <div class="dropdown ms-auto">

@@ -105,7 +105,7 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Controlador?menu=Productos&accion=Listar").forward(request, response);
                     break;
                 default:
- /*                   numeroserie=vdao.GenerarSerie();
+   /*                 numeroserie=vdao.GenerarSerie();
                     if(numeroserie==null){
                         numeroserie="00000001";
                         request.setAttribute("nserie", numeroserie);
@@ -113,11 +113,11 @@ public class Controlador extends HttpServlet {
                         int incrementar=Integer.parseInt(numeroserie);
                         GenerarSerie gs=new GenerarSerie();
                         numeroserie=gs.NumeroSerie(incrementar);
-                        request.setAttribute("nserie", numeroserie);*/
-                    }
+                        request.setAttribute("nserie", numeroserie);}*/
+                }
             }
         if(menu.equals("Ventas")){
-            if(accion!=null){
+            
                 switch (accion) {
                 case "BuscarCliente":
                     String dni = request.getParameter("codigocliente");
@@ -132,8 +132,10 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("producto", pr);
                     request.setAttribute("lista", lista);
                     request.setAttribute("totalpagar", totalPagar);
+                    request.setAttribute("nserie", numeroserie);
                     break;
                 case "Agregar":
+                    request.setAttribute("c", cl);
                     totalPagar=0.0;
                     item = item+1;
                     cod=pr.getId();
@@ -155,7 +157,8 @@ public class Controlador extends HttpServlet {
                         totalPagar=totalPagar+lista.get(i).getSubtotal();
                     }
                     request.setAttribute("lista", lista);
-                    request.setAttribute("totalpagar", totalPagar);  
+                    request.setAttribute("totalpagar", totalPagar);
+     //               request.setAttribute("nserie", numeroserie);
                     break;
                 case "GenerarVenta":
                     //Actualizacion del Stock
@@ -199,7 +202,7 @@ public class Controlador extends HttpServlet {
                         request.setAttribute("nserie", numeroserie);
                     }
                     request.getRequestDispatcher("Ventas.jsp").forward(request, response);
-            }
+            
             }
                 request.getRequestDispatcher("Ventas.jsp").forward(request, response);
             
