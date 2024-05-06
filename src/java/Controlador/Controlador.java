@@ -32,6 +32,7 @@ public class Controlador extends HttpServlet {
     int ide;
     String idc,idc2;
     String idp,idp2;
+    //Necesario para ventas
     Venta v=new Venta();
     List<Venta>lista=new ArrayList<>();
     int item;
@@ -43,6 +44,7 @@ public class Controlador extends HttpServlet {
     double totalPagar;
     String numeroserie;
     VentaDAO vdao=new VentaDAO();
+    String codiProducto;
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -131,11 +133,11 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("lista", lista);
                     request.setAttribute("totalpagar", totalPagar);
                     break;
-           /*     case "Agregar":
-                    request.setAttribute("c", cl);
+                case "Agregar":
                     totalPagar=0.0;
                     item = item+1;
                     cod=pr.getId();
+                    codiProducto=pr.getCodigo();
                     descripcion=request.getParameter("nomproducto");
                     precio=Double.parseDouble(request.getParameter("precio"));
                     cant=Integer.parseInt(request.getParameter("cant"));
@@ -143,16 +145,17 @@ public class Controlador extends HttpServlet {
                     v=new Venta();
                     v.setItem(item);
                     v.setIdproducto(cod);
+                    v.setCodigoProducto(codiProducto);
                     v.setDescripcionP(descripcion);
                     v.setPrecio(precio);
                     v.setCantidad(cant);
-                    v.setSubtotal(subtotal);
+                    v.setSubtotal(subtotal);                                        
                     lista.add(v);
                     for (int i = 0; i < lista.size(); i++) {
                         totalPagar=totalPagar+lista.get(i).getSubtotal();
                     }
-                    request.setAttribute("totalpagar", totalPagar);
                     request.setAttribute("lista", lista);
+                    request.setAttribute("totalpagar", totalPagar);  
                     break;
                 case "GenerarVenta":
                     //Actualizacion del Stock
@@ -183,7 +186,7 @@ public class Controlador extends HttpServlet {
                         v.setPrecio(lista.get(i).getPrecio());
                         vdao.guardarDetalleventas(v);
                     }
-                    break;*/
+                    break;
                 default:
                     numeroserie=vdao.GenerarSerie();
                     if(numeroserie==null){
@@ -198,7 +201,9 @@ public class Controlador extends HttpServlet {
                     request.getRequestDispatcher("Ventas.jsp").forward(request, response);
             }
             }
-            request.getRequestDispatcher("Ventas.jsp").forward(request, response);
+                request.getRequestDispatcher("Ventas.jsp").forward(request, response);
+            
+            
         
         }
         if(menu.equals("Clientes")){

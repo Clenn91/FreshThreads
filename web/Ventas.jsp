@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -37,7 +38,7 @@
                             </div>
                             <div class="form-group d-flex">
                                 <div class="col-sm-6 d-flex">
-                                    <input type="text" name="codigoproducto" value="${producto.getId()}" class="form-control" placeholder="Codigo">
+                                    <input type="text" name="codigoproducto" value="${producto.getCodigo()}" class="form-control" placeholder="Codigo">
                                     <button type="submit" name="accion" value="BuscarProducto" class="btn btn-outline-info">Buscar</button>
                                 </div>
                                 <div class="col-sm-6">
@@ -85,17 +86,16 @@
                                     <th class="accion">Acciones</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody>               
                                 <c:forEach var="list" items="${lista}">
                                 <tr>
                                     <td>${list.getItem()}</td>
-                                    <td>${list.getIdproducto()}</td>
+                                    <td>${list.getCodigoProducto()}</td>
                                     <td>${list.getDescripcionP()}</td>
                                     <td>${list.getPrecio()}</td>
                                     <td>${list.getCantidad()}</td>
                                     <td>${list.getSubtotal()}</td>
-                                    <td>
-                                        <a href="#" class="btn btn-warning">Editar</a>
+                                    <td>                                        
                                         <a href="#" class="btn btn-danger" style="margin-left: 10px">Delete</a>
                                     </td>
                                 </tr>

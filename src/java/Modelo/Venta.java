@@ -10,6 +10,7 @@ public class Venta {
     Integer idcliente;
     Integer idempleado;
     Integer idproducto;
+    String codigoProducto;
     String Numserie;
     String DescripcionP;
     String fecha;
@@ -22,12 +23,13 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(Integer id, Integer item, Integer idcliente, Integer idempleado, Integer idproducto, String Numserie, String DescripcionP, String fecha, Double precio, Integer cantidad, Double subtotal, Double monto, String estado) {
+    public Venta(Integer id, Integer item, Integer idcliente, Integer idempleado, Integer idproducto, String codigoProducto, String Numserie, String DescripcionP, String fecha, Double precio, Integer cantidad, Double subtotal, Double monto, String estado) {
         this.id = id;
         this.item = item;
         this.idcliente = idcliente;
         this.idempleado = idempleado;
         this.idproducto = idproducto;
+        this.codigoProducto = codigoProducto;
         this.Numserie = Numserie;
         this.DescripcionP = DescripcionP;
         this.fecha = fecha;
@@ -37,6 +39,15 @@ public class Venta {
         this.monto = monto;
         this.estado = estado;
     }
+
+    public String getCodigoProducto() {
+        return codigoProducto;
+    }
+
+    public void setCodigoProducto(String codigoProducto) {
+        this.codigoProducto = codigoProducto;
+    }
+
 
     public Integer getId() {
         return id;
