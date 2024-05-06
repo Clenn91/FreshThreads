@@ -112,56 +112,24 @@ public class ClienteDAO {
         } catch (Exception e) {
         }
     }
-  /*  
-    public int actualizar(Cliente cl){
-        String sql="update cliente set Nombres=?,Apellido Paterno=?,Apellido Materno=?,Telefono=?,Dni=?,Estado=? where IdCliente=?";
-        try {
-            con=cn.Conexion();
-            ps=con.prepareStatement(sql);
-            ps.setString(1, cl.getNom());
-            ps.setString(2, cl.getApep());
-            ps.setString(3, cl.getApem());
-            ps.setString(4, cl.getTel());
-            ps.setString(5, cl.getDni());
-            ps.setString(6, cl.getEstado());
-            ps.setInt(6,cl.getId());
-            ps.executeUpdate();
-        } catch (Exception e) {
-            System.out.println("error: "+e.getMessage());
-        }
-        return r;
-    }
-    
-    public void delete(int id){
-        String sql="delete from cliente where IdCliente="+id;
-        try {
-            con=cn.Conexion();
-            ps=con.prepareStatement(sql);
-            ps.executeUpdate();
-        } catch (Exception e) {
-        }
-    }
-    
-    
-    public Cliente listarId(int id){
+    public Cliente buscar(String dni){
         Cliente cl=new Cliente();
-        String sql="select * from cliente where IdCliente="+id;
+        String sql="Select * from cliente where Dni="+dni;
         try {
             con=cn.Conexion();
             ps=con.prepareStatement(sql);
             rs=ps.executeQuery();
             while(rs.next()){
+                cl.setId(rs.getInt(1));
                 cl.setNom(rs.getString(2));
                 cl.setApep(rs.getString(3));
                 cl.setApem(rs.getString(4));
                 cl.setTel(rs.getString(5));
-                cl.setDni(rs.getString(5));
-                cl.setEstado(rs.getString(5));
+                cl.setDni(rs.getString(6));
+                cl.setEstado(rs.getString(7));
             }
         } catch (Exception e) {
-            System.out.println("error: "+e.getMessage());
         }
         return cl;
     }
-   */
 }

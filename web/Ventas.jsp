@@ -18,7 +18,7 @@
         <div class="d-flex">
             <div class="col-lg-5 parte01">
                 <div class="card">
-                    <form action="Controlador?menu=NuevaVenta" method="POST">
+                    <form action="Controlador?menu=Ventas" method="POST">
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Datos del Cliente</label>
@@ -29,7 +29,7 @@
                                     <input type="submit" name="accion" value="BuscarCliente" class="btn btn-outline-info">
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nombrescliente" value="${c.getNom()}" placeholder="Datos Cliente" class="form-control">
+                                    <input type="text" name="nombrescliente" value="${c.getNom()} ${c.getApep()}" placeholder="Datos Cliente" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
