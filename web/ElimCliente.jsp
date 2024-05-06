@@ -22,7 +22,6 @@
                         </div>
                         <div class="col-sm-4">
                             <input type="submit" name="accion" value="Buscar " class="btn btn-primary">
-
                         </div>
 
                     </div>
