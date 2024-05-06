@@ -13,7 +13,7 @@
             <div class="card-body">
                 <form action="Controlador?menu=Clientes" method="POST">
                     <div class="form-group mb-3 ">
-                    <label>Eliminar CLIENTE</label>
+                    <label>MODIFICAR CLIENTE</label>
                     </div>
                     <div class="form-group mb-3 d-flex" >
                         <div class="col-sm-6">
@@ -21,7 +21,7 @@
 
                         </div>
                         <div class="col-sm-4">
-                            <input type="submit" name="accion" value="Buscar " class="btn btn-primary">
+                            <input type="submit" name="accion" value="Buscar" class="btn btn-primary">
 
                         </div>
 
@@ -44,7 +44,7 @@
                     </div>
                     <div class="form-group d-flex justify-content-between">
                         <div class="col-sm-6">
-                            <input type="submit" name="accion" value="Delete" class="btn btn-primary">
+                            <input type="submit" name="accion" value="Actualizar" class="btn btn-primary">
                         </div> 
                         <div class="col-sm-6">
                             <a class="btn btn-danger" href="Controlador?menu=Clientes&accion=Listar" role="button" >Cancelar</a>
