@@ -11,7 +11,7 @@
                 
             }
             .m-4{
-                background-image: url(https://pacoacuna.com/wp-content/uploads/2022/02/Como-Atraer-Clientes-a-Una-Tienda-de-Ropa.jpg);
+                background-image: url('img/TIENDA.jpg');
             }
             
 

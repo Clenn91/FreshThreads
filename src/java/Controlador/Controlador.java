@@ -189,6 +189,12 @@ public class Controlador extends HttpServlet {
                         v.setPrecio(lista.get(i).getPrecio());
                         vdao.guardarDetalleventas(v);
                     }
+                    lista.clear();
+                    totalPagar=0;
+                    break;
+                case "Cancelar":
+                    lista.clear();
+                    totalPagar=0;
                     break;
                 default:
                     numeroserie=vdao.GenerarSerie();

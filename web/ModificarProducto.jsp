@@ -21,10 +21,14 @@
                 padding-bottom: 40px;
             }
             
+            body{
+                background-color: rgba(101, 167, 188, 1);
+            }
+        
         </style>
     </head>
     <body>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center" style="padding-top:100px">
             <div class="col-sm-4">
                 <div class="card">
                     <div class="card-body">

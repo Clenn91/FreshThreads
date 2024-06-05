@@ -13,10 +13,15 @@
                     display: none
                 }
             }
-        </style>
+            
+            body{
+                background-color: rgba(101, 167, 188, 1);
+            }
+        
+    </style>
     </head>
     <body>
-        <div class="d-flex">
+        <div class="d-flex" style="padding-top:100px">
             <div class="col-lg-5 parte01">
                 <div class="card">
                     <form action="Controlador?menu=Ventas" method="POST">
@@ -106,9 +111,11 @@
                     <div class="card-footer d-flex">
                         <div class="col-sm-6">
                             <a href="Controlador?menu=Ventas&accion=GenerarVenta" class="btn btn-success" >Generar Venta</a>
-                            <input type="submit" name="accion" value="Cancelar" class="btn btn-danger">
+                            <a href="Controlador?menu=Ventas&accion=Cancelar" class="btn btn-danger">Cancelar</a>
+                            
                         </div>
                         <div class="col-sm-3 ml-auto">
+                            
                             <input type="text" name="txtTotal" value="S/. ${totalpagar}0" class="form-control">
                         </div>
                     </div>
