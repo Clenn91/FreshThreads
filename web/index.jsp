@@ -38,7 +38,7 @@
         }
         
     </style>
-    <title>JSP Page</title>
+    <title>Fresh Threads</title>
 </head>
 <body>
     <div class="centered-container">
