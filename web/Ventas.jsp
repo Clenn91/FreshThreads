@@ -101,7 +101,7 @@
                                     <td>${list.getCantidad()}</td>
                                     <td>${list.getSubtotal()}</td>
                                     <td>                                        
-                                        <a href="#" class="btn btn-danger" style="margin-left: 10px">Delete</a>
+                                        <a href="Controlador?menu=Ventas&accion=Delete&id=${list.getCodigoProducto()}" class="btn btn-danger" style="margin-left: 10px">Delete</a>
                                     </td>
                                 </tr>
                                 </c:forEach>

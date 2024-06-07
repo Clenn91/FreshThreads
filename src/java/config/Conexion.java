@@ -6,7 +6,7 @@ public class Conexion {
     Connection con;
     String url="jdbc:mysql://localhost:3306/bdventas";
     String user="root";
-    String pass="contractwars54";
+    String pass="123456";
     public Connection Conexion(){
         try {
             Class.forName("com.mysql.jdbc.Driver");

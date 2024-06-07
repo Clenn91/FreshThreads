@@ -196,6 +196,22 @@ public class Controlador extends HttpServlet {
                     lista.clear();
                     totalPagar=0;
                     break;
+                case "Delete":
+                    request.setAttribute("c", cl);
+                    String id = request.getParameter("id");
+                    for (int i = 0; i < lista.size(); i++) {
+                        if (lista.get(i).getCodigoProducto().equals(id)) {
+                            lista.remove(i);
+                            break;
+                        }
+                    }
+                    totalPagar = 0.0;
+                    for (int i = 0; i < lista.size(); i++) {
+                        totalPagar = totalPagar + lista.get(i).getSubtotal();
+                    }
+                    request.setAttribute("lista", lista);
+                    request.setAttribute("totalpagar", totalPagar);
+                    break;
                 default:
                     numeroserie=vdao.GenerarSerie();
                     if(numeroserie==null){
