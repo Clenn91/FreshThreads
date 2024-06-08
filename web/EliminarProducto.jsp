@@ -65,7 +65,7 @@
 
                             <div class="form-group d-flex justify-content-between">
                                 <div class="col-sm-6">
-                                    <input type="submit" name="accion" value="Delete" class="btn btn-primary">
+                                    <input type="submit" name="accion" value="Eliminar" class="btn btn-primary">
                                 </div> 
                                 <div class="col-sm-6">
                                     <a class="btn btn-danger" href="Controlador?menu=Productos&accion=Listar" role="button" >Cancelar</a>

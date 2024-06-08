@@ -23,7 +23,7 @@
     <body>
         <div class="d-flex" style="padding-top:100px">
             <div class="col-lg-5 parte01">
-                <div class="card shadow p-3 mb-5 bg-body rounded">
+                <div class="card ">
                     <form action="Controlador?menu=Ventas" method="POST">
                         <div class="card-body">
                             <div class="form-group">
@@ -72,7 +72,7 @@
                 </div>
             </div>
             <div class="col-sm-7">
-                <div class="card shadow p-3 mb-5 bg-body rounded">
+                <div class="card ">
                     <div class="card-body">
                         <div class="d-flex col-sm-5 ml-auto">
                             <label>Nro.Serie:</label>

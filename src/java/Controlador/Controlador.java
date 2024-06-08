@@ -99,7 +99,7 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("producto", p1);
                     request.getRequestDispatcher("Controlador?menu=EliminarProducto").forward(request, response);
                     break;
-                case "Delete":
+                case "Eliminar":
                     idp = request.getParameter("txtCodigo");
                     pdao.delete(idp);
                     request.getRequestDispatcher("Controlador?menu=Productos&accion=Listar").forward(request, response);
@@ -282,7 +282,7 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("cliente", cl1);
                     request.getRequestDispatcher("Controlador?menu=ElimCliente").forward(request, response);
                     break;
-                case "Delete":
+                case "Eliminar":
                     idc = request.getParameter("txtDni");
                     cdao.delete(idc);
                     request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
