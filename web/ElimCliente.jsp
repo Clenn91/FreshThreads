@@ -14,11 +14,11 @@
     <body>
 <div class="d-flex justify-content-center" style="padding-top:100px">
     <div class="col-sm-4">
-        <div class="card">
+        <div class="card shadow p-3 mb-5 bg-body rounded">
             <div class="card-body">
                 <form action="Controlador?menu=Clientes" method="POST">
                     <div class="form-group mb-3 ">
-                    <label>Eliminar CLIENTE</label>
+                    <label>ELIMINAR CLIENTE</label>
                     </div>
                     <div class="form-group mb-3 d-flex" >
                         <div class="col-sm-6">
