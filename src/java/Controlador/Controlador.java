@@ -19,6 +19,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.poi.xwpf.usermodel.XWPFTable;
+import org.apache.poi.xwpf.usermodel.XWPFTableRow;
+
 
 /**
  *
@@ -128,6 +150,7 @@ public class Controlador extends HttpServlet {
                     } else { // El cliente está registrado
                         request.setAttribute("c", cl);
                     }
+                    request.setAttribute("nserie", numeroserie);
                     break;
                 case "BuscarProducto":
                     String codi=request.getParameter("codigoproducto");
@@ -164,20 +187,22 @@ public class Controlador extends HttpServlet {
                         }
                         request.setAttribute("lista", lista);
                         request.setAttribute("totalpagar", totalPagar);
+                        request.setAttribute("nserie", numeroserie);
                     }
                     break;
                 case "GenerarVenta":
-                    //Actualizacion del Stock
+                    // Actualización del stock
                     for (int i = 0; i < lista.size(); i++) {
-                        Producto p=new Producto();
-                        int cantidad=lista.get(i).getCantidad();
-                        int idproducto=lista.get(i).getIdproducto();
-                        ProductoDAO aO=new ProductoDAO();
-                        p=aO.buscar(idproducto);
-                        int sac=p.getStock()-cantidad;
+                        Producto p = new Producto();
+                        int cantidad = lista.get(i).getCantidad();
+                        int idproducto = lista.get(i).getIdproducto();
+                        ProductoDAO aO = new ProductoDAO();
+                        p = aO.buscar(idproducto);
+                        int sac = p.getStock() - cantidad;
                         aO.actualizarstock(idproducto, sac);
                     }
-                    //Guardar Venta
+
+                    // Guardar Venta
                     v.setIdcliente(cl.getId());
                     v.setIdempleado(1);
                     v.setNumserie(numeroserie);
@@ -185,19 +210,24 @@ public class Controlador extends HttpServlet {
                     v.setMonto(totalPagar);
                     v.setEstado("1");
                     vdao.guardarVenta(v);
-                    //Guardar Detalle ventas
-                    int idv=Integer.parseInt(vdao.IdVentas());
+
+                    // Guardar Detalle ventas
+                    int idv = Integer.parseInt(vdao.IdVentas());
                     for (int i = 0; i < lista.size(); i++) {
-                        v=new Venta();
+                        v = new Venta();
                         v.setId(idv);
                         v.setIdproducto(lista.get(i).getIdproducto());
                         v.setCantidad(lista.get(i).getCantidad());
                         v.setPrecio(lista.get(i).getPrecio());
                         vdao.guardarDetalleventas(v);
                     }
-                    lista.clear();
-                    totalPagar=0;
+                    request.getRequestDispatcher("Controlador?menu=Exportar").forward(request, response);
+                    
+
+        //            lista.clear();
+       //             totalPagar = 0;
                     break;
+
                 case "Cancelar":
                     lista.clear();
                     totalPagar=0;
@@ -317,8 +347,153 @@ public class Controlador extends HttpServlet {
         if(menu.equals("EliminarProducto")){
             request.getRequestDispatcher("EliminarProducto.jsp").forward(request, response);
         }
+        if(menu.equals("Exportar")){
+            
+            switch (accion) {
+                case "ExportarPdf":
+                    try {
+                        // Crear un nombre único para el archivo PDF con la fecha y hora actual
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+                        LocalDateTime now = LocalDateTime.now();
+                        String fileName = "voucher_" + dtf.format(now) + ".pdf";
+                        String filePath = "D:\\DANIEL\\" + fileName;
+
+                        // Iniciar la generación del PDF
+                        Document document = new Document();
+                        PdfWriter.getInstance(document, new FileOutputStream(filePath));
+                        document.open();
+                        document.add(new Paragraph("Voucher de Venta"));
+                        document.add(new Paragraph("Número de Serie: " + numeroserie));
+                        document.add(new Paragraph("Cliente: " + cl.getNom()));
+
+                        PdfPTable table = new PdfPTable(5);
+                        table.addCell("Item");
+                        table.addCell("Código");
+                        table.addCell("Descripción");
+                        table.addCell("Cantidad");
+                        table.addCell("Precio");
+
+                        double totalSinIGV = 0;
+
+                        for (Venta venta : lista) {
+                            table.addCell(String.valueOf(venta.getItem()));
+                            table.addCell(venta.getCodigoProducto());
+                            table.addCell(venta.getDescripcionP());
+                            table.addCell(String.valueOf(venta.getCantidad()));
+                            table.addCell(String.valueOf(venta.getPrecio()));
+
+                            totalSinIGV += venta.getPrecio();
+                        }
+
+                        // Calcular el IGV (18%)
+                        double igv = totalSinIGV * 0.18;
+
+                        // Agregar el IGV antes del total
+                        PdfPCell igvCell = new PdfPCell(new Phrase("IGV (18%)"));
+                        igvCell.setColspan(4);
+                        igvCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                        table.addCell(igvCell);
+                        table.addCell(String.valueOf(igv));
+
+                        PdfPCell totalCell = new PdfPCell(new Phrase("Total a Pagar "));
+                        totalCell.setColspan(4);
+                        totalCell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                        table.addCell(totalCell);
+                        table.addCell(String.valueOf(totalSinIGV));
+
+                        document.add(table);
+                        document.close();
+                    } catch (DocumentException | IOException e) {
+                        e.printStackTrace();
+                    }
+                    lista.clear();
+                    totalPagar = 0;
+                    request.getRequestDispatcher("Ventas.jsp").forward(request, response);
+                    break;
+                case "ExportarWord":
+                    try {
+                        // Crear un nombre único para el archivo Word con la fecha y hora actual
+                        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
+                        LocalDateTime now = LocalDateTime.now();
+                        String fileName = "voucher_" + dtf.format(now) + ".docx";
+                        String filePath = "D:\\DANIEL\\" + fileName;
+
+                        // Crear un nuevo documento Word
+                        XWPFDocument document = new XWPFDocument();
+
+                        // Agregar contenido al documento Word
+                        XWPFParagraph title = document.createParagraph();
+                        title.setAlignment(ParagraphAlignment.CENTER);
+                        XWPFRun titleRun = title.createRun();
+                        titleRun.setText("Voucher de Venta");
+                        titleRun.setBold(true);
+                        titleRun.setFontSize(16);
+
+                        XWPFParagraph seriePara = document.createParagraph();
+                        XWPFRun serieRun = seriePara.createRun();
+                        serieRun.setText("Número de Serie: " + numeroserie);
+
+                        XWPFParagraph clientePara = document.createParagraph();
+                        XWPFRun clienteRun = clientePara.createRun();
+                        clienteRun.setText("Cliente: " + cl.getNom());
+
+                        // Crear una tabla para los detalles de la venta
+                        XWPFTable table = document.createTable();
+                        XWPFTableRow tableRowOne = table.getRow(0);
+                        tableRowOne.getCell(0).setText("Item");
+                        tableRowOne.addNewTableCell().setText("Código");
+                        tableRowOne.addNewTableCell().setText("Descripción");
+                        tableRowOne.addNewTableCell().setText("Cantidad");
+                        tableRowOne.addNewTableCell().setText("Precio");
+
+                        double totalSinIGV = 0;
+
+                        for (Venta venta : lista) {
+                            XWPFTableRow tableRow = table.createRow();
+                            tableRow.getCell(0).setText(String.valueOf(venta.getItem()));
+                            tableRow.getCell(1).setText(venta.getCodigoProducto());
+                            tableRow.getCell(2).setText(venta.getDescripcionP());
+                            tableRow.getCell(3).setText(String.valueOf(venta.getCantidad()));
+                            tableRow.getCell(4).setText(String.valueOf(venta.getPrecio()));
+
+                            totalSinIGV += venta.getPrecio();
+                        }
+
+                        // Calcular el IGV (18%)
+                        double igv = totalSinIGV * 0.18;
+
+                        // Agregar el IGV antes del total
+                        XWPFTableRow igvRow = table.createRow();
+                        igvRow.getCell(0).setText("IGV (18%)");
+                        igvRow.getCell(0).getCTTc().addNewTcPr().addNewGridSpan().setVal(BigInteger.valueOf(4));
+                        igvRow.getCell(0).getParagraphs().get(0).setAlignment(ParagraphAlignment.RIGHT);
+                        igvRow.getCell(4).setText(String.valueOf(igv));
+
+                        XWPFTableRow totalRow = table.createRow();
+                        totalRow.getCell(0).setText("Total a Pagar ");
+                        totalRow.getCell(0).getCTTc().addNewTcPr().addNewGridSpan().setVal(BigInteger.valueOf(4));
+                        totalRow.getCell(0).getParagraphs().get(0).setAlignment(ParagraphAlignment.RIGHT);
+                        totalRow.getCell(4).setText(String.valueOf(totalSinIGV));
+
+                        // Guardar el documento Word
+                        FileOutputStream out = new FileOutputStream(filePath);
+                        document.write(out);
+                        out.close();
+                        document.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    lista.clear();
+                    totalPagar = 0;
+                    request.getRequestDispatcher("Ventas.jsp").forward(request, response);
+                    break;
+                default:
         
-        
+                    break;      
+            }
+            request.getRequestDispatcher("Exportar.jsp").forward(request, response);
+        }
+            
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

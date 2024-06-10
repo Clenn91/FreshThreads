@@ -8,12 +8,7 @@
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <title>VENTAS</title>
     <style>
-            @media print{
-                .parte01, .btn, .accion{
-                    display: none
-                }
-            }
-            
+                    
             body{
                 background-color: rgba(101, 167, 188, 1);
             }
