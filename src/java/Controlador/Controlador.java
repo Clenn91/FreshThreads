@@ -27,6 +27,7 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -356,7 +357,8 @@ public class Controlador extends HttpServlet {
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
                         LocalDateTime now = LocalDateTime.now();
                         String fileName = "voucher_" + dtf.format(now) + ".pdf";
-                        String filePath = "D:\\DANIEL\\" + fileName;
+                        String carpetaDescargas = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
+                        String filePath = carpetaDescargas  + fileName;
 
                         // Iniciar la generación del PDF
                         Document document = new Document();
@@ -416,7 +418,8 @@ public class Controlador extends HttpServlet {
                         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss");
                         LocalDateTime now = LocalDateTime.now();
                         String fileName = "voucher_" + dtf.format(now) + ".docx";
-                        String filePath = "D:\\DANIEL\\" + fileName;
+                        String carpetaDescargas = System.getProperty("user.home") + File.separator + "Downloads" + File.separator;
+                        String filePath = carpetaDescargas + fileName;
 
                         // Crear un nuevo documento Word
                         XWPFDocument document = new XWPFDocument();
