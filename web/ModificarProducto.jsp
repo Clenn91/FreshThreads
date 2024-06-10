@@ -38,7 +38,7 @@
                             </div>
                             <div class="form-group mb-3 d-flex" >
                                 <div class="col-sm-6">
-                                    <input  type="text" name="txtCodigo" value="${producto.getCodigo()}" class="form-control " placeholder="Código">
+                                    <input  type="text" name="txtCodigo" value="${producto.getCodigo()}" class="form-control " placeholder="Código" required>
 
                                 </div>
                                 <div class="col-sm-4">
@@ -65,7 +65,7 @@
 
                             <div class="form-group d-flex justify-content-between">
                                 <div class="col-sm-6">
-                                    <input type="submit" name="accion" value="Actualizar" class="btn btn-primary">
+                                    <input type="submit" name="accion" value="Modificar" class="btn btn-primary">
                                 </div> 
                                 <div class="col-sm-6">
                                     <a class="btn btn-danger" href="Controlador?menu=Productos&accion=Listar" role="button" >Cancelar</a>

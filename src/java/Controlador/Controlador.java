@@ -80,7 +80,7 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("producto", p);
                     request.getRequestDispatcher("Controlador?menu=ModificarProducto").forward(request, response);
                     break;
-                case "Actualizar":
+                case "Modificar":
                     String nom1 = request.getParameter("txtNombres");
                     double precio1 = Double.parseDouble(request.getParameter("txtPrecio"));
                     int stock1 = Integer.parseInt(request.getParameter("txtStock"));
@@ -123,7 +123,11 @@ public class Controlador extends HttpServlet {
                     String dni = request.getParameter("codigocliente");
                     cl.setDni(dni);
                     cl = cdao.buscar(dni);
-                    request.setAttribute("c", cl);
+                    if (cl.getId() == 0) { // El cliente no está registrado
+                        request.getRequestDispatcher("RegisCliente.jsp").forward(request, response);
+                    } else { // El cliente está registrado
+                        request.setAttribute("c", cl);
+                    }
                     break;
                 case "BuscarProducto":
                     String codi=request.getParameter("codigoproducto");
@@ -143,22 +147,24 @@ public class Controlador extends HttpServlet {
                     descripcion=request.getParameter("nomproducto");
                     precio=Double.parseDouble(request.getParameter("precio"));
                     cant=Integer.parseInt(request.getParameter("cant"));
-                    subtotal=precio*cant;
-                    v=new Venta();
-                    v.setItem(item);
-                    v.setIdproducto(cod);
-                    v.setCodigoProducto(codiProducto);
-                    v.setDescripcionP(descripcion);
-                    v.setPrecio(precio);
-                    v.setCantidad(cant);
-                    v.setSubtotal(subtotal);                                        
-                    lista.add(v);
-                    for (int i = 0; i < lista.size(); i++) {
-                        totalPagar=totalPagar+lista.get(i).getSubtotal();
+                     if (cant <= pr.getStock()) {
+                        subtotal = precio * cant;
+                        v = new Venta();
+                        v.setItem(item);
+                        v.setIdproducto(cod);
+                        v.setCodigoProducto(codiProducto);
+                        v.setDescripcionP(descripcion);
+                        v.setPrecio(precio);
+                        v.setCantidad(cant);
+                        v.setSubtotal(subtotal);
+                        lista.add(v);
+
+                        for (int i = 0; i < lista.size(); i++) {
+                            totalPagar += lista.get(i).getSubtotal();
+                        }
+                        request.setAttribute("lista", lista);
+                        request.setAttribute("totalpagar", totalPagar);
                     }
-                    request.setAttribute("lista", lista);
-                    request.setAttribute("totalpagar", totalPagar);
-     //               request.setAttribute("nserie", numeroserie);
                     break;
                 case "GenerarVenta":
                     //Actualizacion del Stock
@@ -261,7 +267,7 @@ public class Controlador extends HttpServlet {
                     request.setAttribute("cliente", c);
                     request.getRequestDispatcher("Controlador?menu=ModifCliente").forward(request, response);
                     break;
-                case "Actualizar":
+                case "Modificar":
                     String nom1 = request.getParameter("txtNombres");
                     String apep1 = request.getParameter("txtApep");
                     String apem1 = request.getParameter("txtApem");

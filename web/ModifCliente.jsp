@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group mb-3 d-flex" >
                         <div class="col-sm-6">
-                            <input type="text" name="txtDni" value="${cliente.getDni()}" class="form-control" placeholder="DNI">
+                            <input type="text" name="txtDni" value="${cliente.getDni()}" class="form-control" placeholder="DNI" required>
 
                         </div>
                         <div class="col-sm-4">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="form-group d-flex justify-content-between">
                         <div class="col-sm-6">
-                            <input type="submit" name="accion" value="Actualizar" class="btn btn-primary">
+                            <input type="submit" name="accion" value="Modificar" class="btn btn-primary">
                         </div> 
                         <div class="col-sm-6">
                             <a class="btn btn-danger" href="Controlador?menu=Clientes&accion=Listar" role="button" >Cancelar</a>

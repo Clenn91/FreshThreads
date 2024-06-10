@@ -22,20 +22,20 @@
                 </div>
                 <div class="form-group mb-3">
                     <div class="col-sm-12">
-                        <input type="text" name="txtNombres" class="form-control" placeholder="Descripción">
+                        <input type="text" name="txtNombres" class="form-control" placeholder="Descripción" required>
                     </div>
                 </div>
                 <div class="form-group d-flex mb-3">
                     <div class="col-sm-6 mr-3">
-                        <input type="text" name="txtPrecio" class="form-control" placeholder="Precio ">
+                        <input type="text" name="txtPrecio" class="form-control" placeholder="Precio " required>
                     </div>
                     <div class="col-sm-6">
-                        <input type="text" name="txtCodigo" class="form-control" placeholder="Codigo ">
+                        <input type="text" name="txtCodigo" class="form-control" placeholder="Codigo " required>
                     </div>                      
                 </div>
                 <div class="form-group mb-3">
                     <div class="col-sm-6 mr-3">
-                        <input type="text" name="txtStock" class="form-control" placeholder="Cantidad">
+                        <input type="text" name="txtStock" class="form-control" placeholder="Cantidad" required>
                     </div>
                                
                 </div>

@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group mb-3 d-flex" >
                         <div class="col-sm-6">
-                            <input type="text" name="txtDni" value="${cliente.getDni()}" class="form-control" placeholder="DNI">
+                            <input type="text" name="txtDni" value="${cliente.getDni()}" class="form-control" placeholder="DNI" required>
 
                         </div>
                         <div class="col-sm-4">

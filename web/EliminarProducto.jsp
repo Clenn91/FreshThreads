@@ -38,7 +38,7 @@
                             </div>
                             <div class="form-group mb-3 d-flex" >
                                 <div class="col-sm-6">
-                                    <input  type="text" name="txtCodigo" value="${producto.getCodigo()}" class="form-control " placeholder="Código">
+                                    <input  type="text" name="txtCodigo" value="${producto.getCodigo()}" class="form-control " placeholder="Código" required>
 
                                 </div>
                                 <div class="col-sm-4">

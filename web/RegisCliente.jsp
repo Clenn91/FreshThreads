@@ -22,34 +22,35 @@
                     </div>
                     <div class="form-group mb-3">
                         <div class="col-sm-12">
-                            <input type="text" name="txtNombre" class="form-control" placeholder="Nombres">
+                            <input type="text" name="txtNombre" class="form-control" placeholder="Nombres" required>
                         </div>
                     </div>
                     <div class="form-group d-flex mb-3">
                         <div class="col-sm-6 mr-3">
-                            <input type="text" name="txtApep" class="form-control" placeholder="Apellido Paterno">
+                            <input type="text" name="txtApep" class="form-control" placeholder="Apellido Paterno" required>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" name="txtApem" class="form-control" placeholder="Apellido Materno">
-                        </div>                      
-                    </div>
-                        <div class="form-group d-flex mb-3">
-                        <div class="col-sm-6 mr-3">
-                        <input type="text" name="txtDni" class="form-control" placeholder="DNI">
-                    </div>
-                    <div class="col-sm-6">
-                        <input type="text" name="txtTel" class="form-control" placeholder="Teléfono">
-                    </div>                             
+                            <input type="text" name="txtApem" class="form-control" placeholder="Apellido Materno" required>
                         </div>
-                    <div class="form-group d-flex justify-content-between">
-                    <div class="col-sm-6">
-                        <input type="submit" name="accion" value="Registrar" class="btn btn-primary" >
-                    </div> 
-                    <div class="col-sm-6">
-                        <a class="btn btn-danger" href="Controlador?menu=Clientes&accion=Listar" role="button" >Cancelar</a>
-                    </div>   
                     </div>
-                </form>    
+                    <div class="form-group d-flex mb-3">
+                        <div class="col-sm-6 mr-3">
+                            <input type="text" name="txtDni" class="form-control" placeholder="DNI" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="txtTel" class="form-control" placeholder="Teléfono" required>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex justify-content-between">
+                        <div class="col-sm-6">
+                            <input type="submit" name="accion" value="Registrar" class="btn btn-primary">
+                        </div>
+                        <div class="col-sm-6">
+                            <a class="btn btn-danger" href="Controlador?menu=Clientes&accion=Listar" role="button">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+    
                 
             </div>
         </div>
