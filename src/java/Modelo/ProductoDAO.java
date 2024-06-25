@@ -97,14 +97,15 @@ public class ProductoDAO {
         return r;
     }
     
-    public Producto listarId(String codigo){
-        Producto pr=new Producto();
-        String sql="select * from producto where Codigo="+codigo;
+    public Producto listarId(String codigo) {
+        Producto pr = new Producto();
+        String sql = "SELECT * FROM producto WHERE Codigo = ?";
         try {
             con=cn.Conexion();
-            ps=con.prepareStatement(sql);
-            rs=ps.executeQuery();
-            while(rs.next()){
+            ps = con.prepareStatement(sql);
+            ps.setString(1, codigo); // Usar setString para códigos alfanuméricos
+            rs = ps.executeQuery();
+            while (rs.next()) {
                 pr.setId(rs.getInt(1));
                 pr.setNom(rs.getString(2));
                 pr.setCodigo(rs.getString(3));
@@ -113,10 +114,11 @@ public class ProductoDAO {
                 pr.setEstado(rs.getString(6));
             }
         } catch (Exception e) {
-            System.out.println("error: "+e.getMessage());
+            System.out.println("error: " + e.getMessage());
         }
         return pr;
     }
+
     public int actualizar(Producto pr){
         String sql="update producto set Nombres=?,Codigo=?, Precio=?, Stock=? where Codigo=? ";
         try {
@@ -143,4 +145,22 @@ public class ProductoDAO {
         } catch (Exception e) {
         }
     }
+    public boolean codigoExiste(String codigo) {
+    boolean existe = false;
+    try {
+        con = cn.Conexion(); // Asegúrate de usar el método de conexión correcto
+        String sql = "SELECT COUNT(*) FROM producto WHERE Codigo = ?";
+        ps = con.prepareStatement(sql);
+        ps.setString(1, codigo);
+        rs = ps.executeQuery();
+        if (rs.next()) {
+            existe = rs.getInt(1) > 0;
+        }
+        con.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return existe;
+    }
+
 }

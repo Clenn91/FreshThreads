@@ -32,6 +32,12 @@
             <div class="col-sm-4">
                 <div class="card shadow p-3 mb-5 bg-body rounded">
                     <div class="card-body">
+                        <% String errorMensaje = (String) request.getAttribute("errorMensaje"); %>
+                        <% if (errorMensaje != null && !errorMensaje.isEmpty()) { %>
+                            <div class="alert alert-danger" role="alert">
+                                <%= errorMensaje %>
+                            </div>
+                        <% } %>
                         <form action="Controlador?menu=Productos" method="POST">
                             <div class="form-group mb-3 ">
                             <label>ELIMINAR PRODUCTO</label>
@@ -50,15 +56,15 @@
                             <div class="d-flex">
                                 <div class="form-group mb-3">
                                     <div class="col-sm-10 mr-3 ">
-                                        <input type="text" name="txtPrecio" value="${producto.getPrecio()}" class="form-control " placeholder="Precio">
+                                        <input type="text" name="txtPrecio" value="${producto.getPrecio()}" class="form-control " placeholder="Precio" readonly>
                                     </div>
                                     <div class="col-sm-10 ">
-                                        <input  type="text" name="txtStock" value="${producto.getStock()}" class="form-control" placeholder="Cantidad">
+                                        <input  type="text" name="txtStock" value="${producto.getStock()}" class="form-control" placeholder="Cantidad" readonly>
                                     </div>                      
                                 </div>
                                 <div class="form-group mb-8">
                                     <div class="col-sm-12 mr-8 ">
-                                        <input type="text" name="txtNombres" value="${producto.getNom()}" class="form-control" placeholder="Descripción">
+                                        <input type="text" name="txtNombres" value="${producto.getNom()}" class="form-control" placeholder="Descripción" readonly>
                                     </div>                             
                                 </div>                            
                             </div>

@@ -89,41 +89,70 @@ public class Controlador extends HttpServlet {
                     String cod = request.getParameter("txtCodigo");
                     int stock = Integer.parseInt(request.getParameter("txtStock"));
                     String est = request.getParameter("txtEstado");
-                    pr.setNom(nom);
-                    pr.setCodigo(cod);
-                    pr.setPrecio(precio);
-                    pr.setStock(stock);
-                    pr.setEstado(est);
-                    pdao.agregar(pr);
-                    request.getRequestDispatcher("Controlador?menu=Productos&accion=Listar").forward(request, response);
+                    if (pdao.codigoExiste(cod)) {
+                        // El código ya existe, mostrar mensaje de error o redirigir
+                        request.setAttribute("errorMensaje", "El código del producto ya existe.");
+                        request.getRequestDispatcher("NuevoProducto.jsp").forward(request, response);
+                    } else {
+                        // El código no existe, agregar el producto
+                        pr.setNom(nom);
+                        pr.setCodigo(cod);
+                        pr.setPrecio(precio);
+                        pr.setStock(stock);
+                        pr.setEstado(est);
+                        pdao.agregar(pr);
+                        request.getRequestDispatcher("Controlador?menu=Productos&accion=Listar").forward(request, response);
+                    }
                     break;
                 case "Buscar":
                     idp = request.getParameter("txtCodigo");
-                    Producto p = pdao.listarId(idp);
-                    request.setAttribute("producto", p);
-                    request.getRequestDispatcher("Controlador?menu=ModificarProducto").forward(request, response);
+                    if (pdao.codigoExiste(idp)) {
+                        Producto p = pdao.listarId(idp);
+                        request.setAttribute("producto", p);
+                        request.getRequestDispatcher("Controlador?menu=ModificarProducto").forward(request, response);
+                    } else {
+                        request.setAttribute("errorMensaje", "El código del producto no existe.");
+                        request.getRequestDispatcher("Controlador?menu=ModificarProducto").forward(request, response);
+                    }
                     break;
                 case "Modificar":
-                    String nom1 = request.getParameter("txtNombres");
-                    double precio1 = Double.parseDouble(request.getParameter("txtPrecio"));
-                    int stock1 = Integer.parseInt(request.getParameter("txtStock"));
                     String cod1 = request.getParameter("txtCodigo");
-                    pr.setNom(nom1);
-                    pr.setPrecio(precio1);
-                    pr.setStock(stock1);
-                    pr.setCodigo(cod1);
-                    
-                    pdao.actualizar(pr);
-                    request.getRequestDispatcher("Controlador?menu=Productos&accion=Listar").forward(request, response);
+                    if (cod1 == null || cod1.isEmpty()) {
+                        // Mostrar mensaje de error si el código está vacío
+                        request.setAttribute("errorMensaje", "Ingrese un código válido para modificar el producto.");
+                        request.getRequestDispatcher("Controlador?menu=ModificarProducto").forward(request, response);
+                    } else {
+                        // Continuar con la modificación si el código no está vacío
+                        String nom1 = request.getParameter("txtNombres");
+                        double precio1 = Double.parseDouble(request.getParameter("txtPrecio"));
+                        int stock1 = Integer.parseInt(request.getParameter("txtStock"));
+
+                        pr.setNom(nom1);
+                        pr.setPrecio(precio1);
+                        pr.setStock(stock1);
+                        pr.setCodigo(cod1);
+
+                        pdao.actualizar(pr);
+                        request.getRequestDispatcher("Controlador?menu=Productos&accion=Listar").forward(request, response);
+                    }
                     break;
+
                 case "Buscar ":
+                    
                     idp2 = request.getParameter("txtCodigo");
-                    Producto p1 = pdao.listarId(idp2);
-                    request.setAttribute("producto", p1);
-                    request.getRequestDispatcher("Controlador?menu=EliminarProducto").forward(request, response);
+                    if (pdao.codigoExiste(idp2)) {
+                        Producto p1 = pdao.listarId(idp2);
+                        request.setAttribute("producto", p1);
+                        request.getRequestDispatcher("Controlador?menu=EliminarProducto").forward(request, response);
+                    } else {
+                        request.setAttribute("errorMensaje", "El código del producto no existe.");
+                        request.getRequestDispatcher("Controlador?menu=EliminarProducto").forward(request, response);
+                    }
+                    
                     break;
                 case "Eliminar":
                     idp = request.getParameter("txtCodigo");
+                    
                     pdao.delete(idp);
                     request.getRequestDispatcher("Controlador?menu=Productos&accion=Listar").forward(request, response);
                     break;

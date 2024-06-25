@@ -16,6 +16,13 @@
     <div class="col-sm-4">
         <div class="card shadow p-3 mb-5 bg-body rounded">
             <div class="card-body">
+                <%-- Mostrar mensaje de error si existe --%>
+                <% String errorMensaje = (String) request.getAttribute("errorMensaje"); %>
+                <% if (errorMensaje != null) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= errorMensaje %>
+                    </div>
+                <% } %>
                 <form action="Controlador?menu=Productos" method="POST">
                   <div class="form-group mb-3 ">
                     <label>NUEVO PRODUCTO</label>
@@ -27,7 +34,7 @@
                 </div>
                 <div class="form-group d-flex mb-3">
                     <div class="col-sm-6 mr-3">
-                        <input type="text" name="txtPrecio" class="form-control" placeholder="Precio " required>
+                        <input type="number" name="txtPrecio" class="form-control" placeholder="Precio " required min="0" step="0.01">
                     </div>
                     <div class="col-sm-6">
                         <input type="text" name="txtCodigo" class="form-control" placeholder="Codigo " required>
@@ -35,7 +42,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <div class="col-sm-6 mr-3">
-                        <input type="text" name="txtStock" class="form-control" placeholder="Cantidad" required>
+                        <input type="number" name="txtStock" class="form-control" placeholder="Cantidad" required min="0" step="1">
                     </div>
                                
                 </div>
