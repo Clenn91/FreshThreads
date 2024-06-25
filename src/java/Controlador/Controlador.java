@@ -115,6 +115,7 @@ public class Controlador extends HttpServlet {
                         request.getRequestDispatcher("Controlador?menu=ModificarProducto").forward(request, response);
                     }
                     break;
+                  //  d
                 case "Modificar":
                     String cod1 = request.getParameter("txtCodigo");
                     if (cod1 == null || cod1.isEmpty()) {
