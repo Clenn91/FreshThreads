@@ -56,7 +56,21 @@ public class ProductoDAO {
         }
         return r;
     }
-    
+    public int actualizarStockCod(String codigo, int stock){
+    String sql = "update producto set Stock=? where Codigo=?";
+    try {
+        con = cn.Conexion();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, stock);
+        ps.setString(2, codigo);
+        int r = ps.executeUpdate();
+        return r;
+    } catch (Exception e) {
+        System.out.println("Error: " + e.getMessage());
+        return 0; // Otra opción es lanzar una excepción aquí si prefieres manejar errores de manera distinta
+    }
+}
+
     public List listar(){
         String sql="select * from producto";
         List<Producto>lista=new ArrayList<>();
@@ -146,21 +160,21 @@ public class ProductoDAO {
         }
     }
     public boolean codigoExiste(String codigo) {
-    boolean existe = false;
-    try {
-        con = cn.Conexion(); // Asegúrate de usar el método de conexión correcto
-        String sql = "SELECT COUNT(*) FROM producto WHERE Codigo = ?";
-        ps = con.prepareStatement(sql);
-        ps.setString(1, codigo);
-        rs = ps.executeQuery();
-        if (rs.next()) {
-            existe = rs.getInt(1) > 0;
+        boolean existe = false;
+        try {
+            con = cn.Conexion(); // Asegúrate de usar el método de conexión correcto
+            String sql = "SELECT COUNT(*) FROM producto WHERE Codigo = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, codigo);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                existe = rs.getInt(1) > 0;
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        con.close();
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-    return existe;
+        return existe;
     }
 
 }

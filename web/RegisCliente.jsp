@@ -16,6 +16,12 @@
     <div class="col-sm-4">
         <div class="card shadow p-3 mb-5 bg-body rounded">
             <div class="card-body">
+                <% String errorMensaje = (String) request.getAttribute("errorMensaje"); %>
+                <% if (errorMensaje != null) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= errorMensaje %>
+                    </div>
+                <% } %>
                 <form action="Controlador?menu=Clientes" method="POST">
                     <div class="form-group mb-3 ">
                         <label>REGISTRAR CLIENTE</label>
@@ -33,12 +39,12 @@
                             <input type="text" name="txtApem" class="form-control" placeholder="Apellido Materno" required>
                         </div>
                     </div>
-                    <div class="form-group d-flex mb-3">
+                    <div class="form-group d-flex mb-3">    
                         <div class="col-sm-6 mr-3">
-                            <input type="text" name="txtDni" class="form-control" placeholder="DNI" required>
+                            <input type="text" name="txtDni" class="form-control" placeholder="DNI" pattern="[0-9]{8}" title="Debe contener 8 números" required>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" name="txtTel" class="form-control" placeholder="Teléfono" required>
+                            <input type="text" name="txtTel" class="form-control" placeholder="Teléfono" pattern="[0-9]{9}" title="Debe contener 9 números" required>
                         </div>
                     </div>
                     <div class="form-group d-flex justify-content-between">

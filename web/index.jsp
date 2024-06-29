@@ -66,10 +66,10 @@
                         <label style="font-family: 'Inria Serif', serif; font-size: 42px;">Bienvenidos al Sistema</label>
                     </div>
                     <div class="form-group">
-                        <input placeholder="Usuario" type="text" name="txtuser" class="form-control" style="color: rgba(119, 112, 112, 0.9); width: 220px;">
+                        <input placeholder="Usuario" type="text" name="txtuser" required class="form-control" style="color: rgba(119, 112, 112, 0.9); width: 220px;">
                     </div>
                     <div class="form-group">
-                        <input placeholder="Contraseña" type="password" name="txtpass" class="form-control" style="color: rgba(119, 112, 112, 0.9); width: 220px;">
+                        <input placeholder="Contraseña" type="password" name="txtpass" required class="form-control" style="color: rgba(119, 112, 112, 0.9); width: 220px;">
                     </div>
                     <div class="form-group">
                         <input class="btn btn-primary" style="background-color: rgba(101, 167, 188, 1)" type="submit" name="accion" value="Ingresar">

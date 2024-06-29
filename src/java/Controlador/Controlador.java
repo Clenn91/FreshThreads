@@ -177,6 +177,8 @@ public class Controlador extends HttpServlet {
                     cl.setDni(dni);
                     cl = cdao.buscar(dni);
                     if (cl.getId() == 0) { // El cliente no está registrado
+                        request.setAttribute("errorMensaje", "El cliente no está registrado.");
+                        
                         request.getRequestDispatcher("RegisCliente.jsp").forward(request, response);
                     } else { // El cliente está registrado
                         request.setAttribute("c", cl);
@@ -185,12 +187,18 @@ public class Controlador extends HttpServlet {
                     break;
                 case "BuscarProducto":
                     String codi=request.getParameter("codigoproducto");
-                    pr=pdao.listarId(codi);
-                    request.setAttribute("c", cl);
-                    request.setAttribute("producto", pr);
-                    request.setAttribute("lista", lista);
-                    request.setAttribute("totalpagar", totalPagar);
-                    request.setAttribute("nserie", numeroserie);
+                    if (pdao.codigoExiste(codi)) {
+                        pr=pdao.listarId(codi);
+                        request.setAttribute("c", cl);
+                        request.setAttribute("producto", pr);
+                        request.setAttribute("lista", lista);
+                        request.setAttribute("totalpagar", totalPagar);
+                        request.setAttribute("nserie", numeroserie);
+                    } else {
+                        request.setAttribute("errorMensaje", "El código del producto no existe.");
+                        request.setAttribute("c", cl);
+                    }
+                    
                     break;
                 case "Agregar":
                     request.setAttribute("c", cl);
@@ -216,6 +224,7 @@ public class Controlador extends HttpServlet {
                         for (int i = 0; i < lista.size(); i++) {
                             totalPagar += lista.get(i).getSubtotal();
                         }
+                        pdao.actualizarstock(cod, pr.getStock()-cant);
                         request.setAttribute("lista", lista);
                         request.setAttribute("totalpagar", totalPagar);
                         request.setAttribute("nserie", numeroserie);
@@ -223,7 +232,7 @@ public class Controlador extends HttpServlet {
                     break;
                 case "GenerarVenta":
                     // Actualización del stock
-                    for (int i = 0; i < lista.size(); i++) {
+          /*          for (int i = 0; i < lista.size(); i++) {
                         Producto p = new Producto();
                         int cantidad = lista.get(i).getCantidad();
                         int idproducto = lista.get(i).getIdproducto();
@@ -231,8 +240,8 @@ public class Controlador extends HttpServlet {
                         p = aO.buscar(idproducto);
                         int sac = p.getStock() - cantidad;
                         aO.actualizarstock(idproducto, sac);
-                    }
-
+                    }*/
+//Nota: El stock se actualiza cuando se agrega a la lista
                     // Guardar Venta
                     v.setIdcliente(cl.getId());
                     v.setIdempleado(1);
@@ -260,14 +269,31 @@ public class Controlador extends HttpServlet {
                     break;
 
                 case "Cancelar":
+                    for (int i = 0; i < lista.size(); i++) {
+                        Producto p = new Producto();
+                        int cantidad = lista.get(i).getCantidad();
+                        int idproducto = lista.get(i).getIdproducto();
+                        ProductoDAO aO = new ProductoDAO();
+                        p = aO.buscar(idproducto);
+                        int sac = p.getStock() + cantidad;
+                        aO.actualizarstock(idproducto, sac);
+                    }
                     lista.clear();
                     totalPagar=0;
+                    response.getWriter().write("Stock restaurado correctamente");
                     break;
                 case "Delete":
                     request.setAttribute("c", cl);
                     String id = request.getParameter("id");
                     for (int i = 0; i < lista.size(); i++) {
                         if (lista.get(i).getCodigoProducto().equals(id)) {
+                            Producto p = new Producto();
+                            int cantidad = lista.get(i).getCantidad();
+                            int idproducto = lista.get(i).getIdproducto();
+                            ProductoDAO aO = new ProductoDAO();
+                            p = aO.buscar(idproducto);
+                            int sac = p.getStock() + cantidad;
+                            aO.actualizarstock(idproducto, sac);
                             lista.remove(i);
                             break;
                         }
@@ -313,20 +339,32 @@ public class Controlador extends HttpServlet {
                         String dni = request.getParameter("txtDni");
                         String tel = request.getParameter("txtTel");
                         String est = "A";
-                        cl.setNom(nom);
-                        cl.setApep(apep);
-                        cl.setApem(apem);
-                        cl.setDni(dni);
-                        cl.setTel(tel);
-                        cl.setEstado(est);
-                        cdao.agregar(cl);
-                        request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response);
+                        if (cdao.codigoExiste(dni)) {
+                        // El código ya existe, mostrar mensaje de error o redirigir
+                        request.setAttribute("errorMensaje", "El cliente ya existe.");
+                        request.getRequestDispatcher("RegisCliente.jsp").forward(request, response);
+                        } else {
+                            cl.setNom(nom);
+                            cl.setApep(apep);
+                            cl.setApem(apem);
+                            cl.setDni(dni);
+                            cl.setTel(tel);
+                            cl.setEstado(est);
+                            cdao.agregar(cl);
+                            request.getRequestDispatcher("Controlador?menu=Clientes&accion=Listar").forward(request, response); 
+                        }
+                        
                         break;
                 case "Buscar":
                     idc = request.getParameter("txtDni");
-                    Cliente c = cdao.listarId(idc);
-                    request.setAttribute("cliente", c);
-                    request.getRequestDispatcher("Controlador?menu=ModifCliente").forward(request, response);
+                    if (cdao.codigoExiste(idc)) {
+                            Cliente c = cdao.listarId(idc);
+                        request.setAttribute("cliente", c);
+                        request.getRequestDispatcher("Controlador?menu=ModifCliente").forward(request, response);
+                        } else {
+                            request.setAttribute("errorMensaje", "El cliente no existe.");
+                            request.getRequestDispatcher("RegisCliente.jsp").forward(request, response);
+                        }
                     break;
                 case "Modificar":
                     String nom1 = request.getParameter("txtNombres");

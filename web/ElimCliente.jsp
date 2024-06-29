@@ -22,28 +22,28 @@
                     </div>
                     <div class="form-group mb-3 d-flex" >
                         <div class="col-sm-6">
-                            <input type="text" name="txtDni" value="${cliente.getDni()}" class="form-control" placeholder="DNI" required>
+                            <input type="text" name="txtDni" value="${cliente.getDni()}" class="form-control" placeholder="DNI" pattern="[0-9]{8}" title="Debe contener 8 números" required>
 
                         </div>
                         <div class="col-sm-4">
-                            <input type="submit" name="accion" value="Buscar " class="btn btn-primary">
+                            <input type="submit" name="accion" value="Buscar " class="btn btn-primary" >
                         </div>
 
                     </div>
                     <div class="form-group d-flex mb-3">
                         <div class="col-sm-6 mr-3">
-                            <input type="text" name="txtNombres" value="${cliente.getNom()}" class="form-control" placeholder="Nombres">
+                            <input type="text" name="txtNombres" value="${cliente.getNom()}" class="form-control" placeholder="Nombres" readonly>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" name="txtApep" value="${cliente.getApep()}" class="form-control" placeholder="Apellido Paterno">
+                            <input type="text" name="txtApep" value="${cliente.getApep()}" class="form-control" placeholder="Apellido Paterno" readonly>
                         </div>                      
                     </div>
                     <div class="form-group d-flex mb-3">
                         <div class="col-sm-6 mr-3">
-                            <input type="text" name="txtApem" value="${cliente.getApem()}" class="form-control" placeholder="Apellido Materno">
+                            <input type="text" name="txtApem" value="${cliente.getApem()}" class="form-control" placeholder="Apellido Materno" readonly>
                         </div>
                         <div class="col-sm-6">
-                            <input type="text" name="txtTel" value="${cliente.getTel()}" class="form-control" placeholder="Teléfono">
+                            <input type="text" name="txtTel" value="${cliente.getTel()}" class="form-control" placeholder="Teléfono" readonly>
                         </div>                             
                     </div>
                     <div class="form-group d-flex justify-content-between">

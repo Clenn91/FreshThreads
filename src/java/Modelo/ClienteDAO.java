@@ -131,5 +131,22 @@ public class ClienteDAO {
         } catch (Exception e) {
         }
         return cl;
-    }   
+    }
+    public boolean codigoExiste(String dni) {
+        boolean existe = false;
+        try {
+            con = cn.Conexion(); // Asegúrate de usar el método de conexión correcto
+            String sql = "SELECT COUNT(*) FROM cliente WHERE Dni = ?";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, dni);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                existe = rs.getInt(1) > 0;
+            }
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return existe;
+    }
 }
